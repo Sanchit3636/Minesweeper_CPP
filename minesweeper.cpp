@@ -62,11 +62,10 @@ void printBoard(char myBoard[][MAXSIDE])
 
 // A Function to count the number of
 // mines in the adjacent cells
-int countAdjacentMines(int row, int col, int mines[][2], 
+int countAdjacentMines(int row, int col, 
 					char realBoard[][MAXSIDE])
 {
 
-	int i;
 	int count = 0;
 
 	/*
@@ -168,7 +167,7 @@ bool playGame(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 	if (myBoard[row][col] != '-')
 		return (false);
 
-	int i, j;
+	int i;
 
 	// You opened a mine
 	// You are going to lose
@@ -188,7 +187,7 @@ bool playGame(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 	{
 		// Calculate the number of adjacent mines and put it
 		// on the board
-		int count = countAdjacentMines(row, col, mines, realBoard);
+		int count = countAdjacentMines(row, col, realBoard);
 		(*movesLeft)--;
 
 		myBoard[row][col] = count + '0';

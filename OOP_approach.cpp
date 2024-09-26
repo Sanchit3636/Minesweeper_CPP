@@ -3,20 +3,21 @@ using namespace std;
 
 class Board {
 private:
-    int Side; // side length of the board
-    int Mines; // number of mines on the board
+    int Side;
+    int Mines;
     char realBoard[25][25];
     char myBoard[25][25];
     int mineLocations[99][2];
 
 public:
     Board(int side, int mines) : Side(side), Mines(mines) {
+        srand(time(0));  // Seeding random number generator with current time for random mine placement
         initialiseBoards();
         placeMines();
     }
 
-    int getSide() const { return Side; } // Getter for Side
-    int getMines() const { return Mines; } // Getter for Mines
+    int getSide() const { return Side; }
+    int getMines() const { return Mines; }
     char getRealCell(int row, int col) const { return realBoard[row][col]; }
     char getMyCell(int row, int col) const { return myBoard[row][col]; }
     void setMyCell(int row, int col, char value) { myBoard[row][col] = value; }
@@ -31,7 +32,7 @@ public:
     }
 
     void placeMines() {
-        bool mark[625]; // 25 * 25 = 625 max cells
+        bool mark[625];
         memset(mark, false, sizeof(mark));
 
         for (int i = 0; i < Mines; ) {
@@ -172,9 +173,16 @@ public:
 
         return false;
     }
+
+    bool playAgain() {
+        char choice;
+        printf("Do you want to play again? (y/n): ");
+        cin >> choice;
+        return (choice == 'y' || choice == 'Y');
+    }
 };
 
-int main() {
+void startGame() {
     int level;
     printf("Enter the Difficulty Level\n");
     printf("Press 0 for BEGINNER (9x9 cells and 10 mines)\n");
@@ -197,6 +205,17 @@ int main() {
     Board b(side, mines);
     Game g(&b);
     g.play();
+}
 
+int main() {
+    bool playMore = true;
+    while (playMore) {
+        startGame();
+        printf("\n--- Game Over ---\n");
+        Game game(nullptr);
+        playMore = game.playAgain();
+    }
+
+    printf("Thanks for playing!\n");
     return 0;
 }
